@@ -27,11 +27,19 @@ pipeline {
 
       steps {
 
-        sh 'docker build -t jtrevinodev/guestbook:prod .'
+        sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
         sh 'docker push jtrevinodev/guesbook:prod'
 
       }
+
+      /*steps {
+
+        sh 'docker build -t jtrevinodev/guestbook:prod src/redis-slave'
+
+        sh 'docker push jtrevinodev/guesbook:prod'
+
+      }*/
 
     }
 
