@@ -10,15 +10,12 @@ pipeline {
 
   }
 
-  
-
   stages {
 
     stage('Clone repository') {
 
       steps {
-	
-        git 'git@github.com:jtrevinodev/guestbook-devops.git'
+        git branch: 'main', credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops.git'
 
       }
 
@@ -30,9 +27,9 @@ pipeline {
 
       steps {
 
-        sh 'docker build -t my-image:latest .'
+        sh 'docker build -t jtrevinodev/guestbook:prod .'
 
-        sh 'docker push my-image:latest'
+        sh 'docker push jtrevinodev/guesbook:prod'
 
       }
 
@@ -46,7 +43,7 @@ pipeline {
 
         kubernetesDeploy(
 
-          configs: 'kubernetes/deployment.yaml',
+          configs: 'deploy/prod/deployment.yaml',
 
           kubeconfigId: 'my-kubeconfig'
 
