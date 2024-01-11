@@ -10,19 +10,26 @@ pipeline {
 
   }
 
-   environment{
-      registry = "jtrevinodev/guestbook"
-      //registryCredential = '<dockerhub-credential-name>'
-    }
-    
+  environment{
+    registry = "jtrevinodev/guestbook"
+    //registryCredential = '<dockerhub-credential-name>'
+  }
+
+  def app
 
   stages {
 
     stage('Clone repository') {
 
-      steps {
+      /*steps {
         git branch: 'master', credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops.git'
 
+      }*/
+
+      steps { 
+        script{
+          checkout scm
+        }
       }
 
     }
@@ -33,9 +40,13 @@ pipeline {
 
       steps {
 
-        sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
+        app = docker.build("jtrevinodev/guestbook:prod src/php-redis")
 
-        sh 'docker push jtrevinodev/guesbook:prod'
+        //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
+
+        //sh 'docker push jtrevinodev/guesbook:prod'
+
+
 
       }
 
@@ -49,6 +60,13 @@ pipeline {
 
     }
 
+    stage('Push container image to registry'){
+      steps{
+        app.push("${env.BUILD_NUMBER}")
+        app.push("prod")
+      }
+       
+    }
     
 
     /*stage('Deploy to Kubernetes') {
