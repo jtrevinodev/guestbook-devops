@@ -15,7 +15,7 @@ pipeline {
     stage('Clone repository') {
 
       steps {
-        git branch: 'main', credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops.git'
+        git branch: 'master', credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops.git'
 
       }
 
