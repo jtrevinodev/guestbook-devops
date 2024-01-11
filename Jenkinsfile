@@ -15,8 +15,6 @@ pipeline {
     //registryCredential = '<dockerhub-credential-name>'
   }
 
-  def app
-
   stages {
 
     stage('Clone repository') {
@@ -36,7 +34,7 @@ pipeline {
 
     
 
-    stage('Build and push Docker image') {
+    stage('Build docker image') {
 
       steps {
 
@@ -62,9 +60,13 @@ pipeline {
     }
 
     stage('Push container image to registry'){
+      
       steps{
-        app.push("${env.BUILD_NUMBER}")
-        app.push("prod")
+        script{
+          app.push("${env.BUILD_NUMBER}")
+          app.push("prod")
+        }
+        
       }
        
     }
