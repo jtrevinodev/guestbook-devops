@@ -10,6 +10,12 @@ pipeline {
 
   }
 
+   environment{
+      registry = "jtrevinodev/guestbook"
+      //registryCredential = '<dockerhub-credential-name>'
+    }
+    
+
   stages {
 
     stage('Clone repository') {
