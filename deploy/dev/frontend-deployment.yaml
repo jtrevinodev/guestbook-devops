@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: jtrevinodev/guestbook:prod
+        image: jtrevinodev/guestbook:latest
         env:
         - name: GET_HOSTS_FROM
           value: "env"
