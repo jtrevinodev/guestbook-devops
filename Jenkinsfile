@@ -89,13 +89,22 @@ pipeline {
     }
     
 
-    /*stage('Deploy to Kubernetes') {
+    stage('Deploy to Kubernetes') {
+      agent {
+
+      kubernetes {
+        label 'k8-local-cluster'
+
+      }
+
+      }
+      
 
       steps {
 
         kubernetesDeploy(
 
-          configs: 'deploy/prod/deployment.yaml',
+          configs: 'deploy/prod/',
 
           kubeconfigId: 'my-kubeconfig'
 
@@ -103,7 +112,7 @@ pipeline {
 
       }
 
-    }*/
+    }
 
   }
 
