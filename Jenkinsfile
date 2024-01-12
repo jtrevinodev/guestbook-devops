@@ -39,6 +39,8 @@ pipeline {
       steps {
 
         script{
+          echo "hola"
+          
           app = docker.build("jtrevinodev/guestbook:prod src/php-redis")
         }
         //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
