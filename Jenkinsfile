@@ -1,6 +1,6 @@
 pipeline {
 
-  agent {
+  /*agent {
 
     kubernetes {
 
@@ -8,7 +8,7 @@ pipeline {
 
     }
 
-  }
+  }*/
 
   environment{
     registry = "jtrevinodev/guestbook"
@@ -40,7 +40,7 @@ pipeline {
 
         script{
           echo "hola"
-          
+
           app = docker.build("jtrevinodev/guestbook:prod src/php-redis")
         }
         //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
