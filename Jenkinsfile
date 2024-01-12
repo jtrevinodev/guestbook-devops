@@ -12,8 +12,8 @@ pipeline {
   }*/
 
   environment{
-    registry = "jtrevinodev/guestbook"
-    //registryCredential = '<dockerhub-credential-name>'
+    registry = "jtrevinodev/guestbook:prod"
+    registryCredential = 'docker-hub-credential'
   }
 
   stages {
