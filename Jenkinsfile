@@ -41,7 +41,7 @@ pipeline {
 
         script{
           echo "Building docker container"
-          echo ls
+          pwd
           sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
           //app = docker.build("jtrevinodev/guestbook:prod src/php-redis")
