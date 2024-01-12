@@ -43,9 +43,9 @@ pipeline {
         script{
           echo "Building docker container"
           //pwd
-          sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
+          //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
-          //app = docker.build("jtrevinodev/guestbook:prod src/php-redis")
+          app = docker.build("jtrevinodev/guestbook:prod", "src/php-redis")
         }
         //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
@@ -76,8 +76,9 @@ pipeline {
         script{
           docker.withRegistry( '', registryCredential ) {
             //app.push()
+            app.push("${env.BUILD_NUMBER}")
 
-            sh 'docker push jtrevinodev/guestbook:prod'
+            //sh 'docker push jtrevinodev/guestbook:prod'
           }
         }
 
