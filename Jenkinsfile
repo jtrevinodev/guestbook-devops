@@ -12,8 +12,9 @@ pipeline {
   }*/
 
   environment{
-    registry = "jtrevinodev/guestbook:prod"
+    registry = "jtrevinodev/guestbook"
     registryCredential = 'docker-hub-credential'
+    app = ''
   }
 
   stages {
@@ -41,10 +42,10 @@ pipeline {
 
         script{
           echo "Building docker container"
-          pwd
-          sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
+          //pwd
+          //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
-          //app = docker.build("jtrevinodev/guestbook:prod src/php-redis")
+          app = docker.build("jtrevinodev/guestbook:prod src/php-redis")
         }
         //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
@@ -72,7 +73,13 @@ pipeline {
           app.push("prod")
         }*/
 
-        sh 'docker push jtrevinodev/guestbook:prod'
+        script{
+          docker.withRegistry( '', registryCredential ) {
+            app.push()
+          }
+        }
+
+        
         
       }
        
