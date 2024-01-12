@@ -40,7 +40,7 @@ pipeline {
       steps {
 
         script{
-          echo "hola"
+          echo "hola2"
 
           app = docker.build("jtrevinodev/guestbook:prod src/php-redis")
         }
