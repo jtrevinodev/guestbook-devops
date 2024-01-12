@@ -67,10 +67,12 @@ pipeline {
     stage('Push container image to registry'){
       
       steps{
-        script{
+        /*script{
           app.push("${env.BUILD_NUMBER}")
           app.push("prod")
-        }
+        }*/
+
+        sh 'docker push jtrevinodev/guesbook:prod'
         
       }
        
