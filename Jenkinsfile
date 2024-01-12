@@ -72,7 +72,7 @@ pipeline {
           app.push("prod")
         }*/
 
-        sh 'docker push jtrevinodev/guesbook:prod'
+        sh 'docker push jtrevinodev/guestbook:prod'
         
       }
        
