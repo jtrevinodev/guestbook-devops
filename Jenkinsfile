@@ -59,7 +59,7 @@ pipeline {
 
         sh 'docker build -t jtrevinodev/guestbook:prod src/redis-slave'
 
-        sh 'docker push jtrevinodev/guesbook:prod'
+        sh 'docker push jtrevinodev/guestbook:prod'
 
       }*/
 
@@ -77,7 +77,7 @@ pipeline {
           docker.withRegistry( '', registryCredential ) {
             //app.push()
 
-            docker push jtrevinodev/guestbook:prod
+            sh 'docker push jtrevinodev/guestbook:prod'
           }
         }
 
