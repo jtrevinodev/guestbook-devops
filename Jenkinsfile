@@ -100,6 +100,8 @@ pipeline {
           sh 'echo "Pushing deployment config to deployment repository"'
 
           //withCredentials([gitUsernamePassword(credentialsId: 'github-key', gitToolName: 'git-tool')]) {
+            sh 'git config --global user.email "jtrevino.dev@gmail.com"'
+            sh 'git config --global user.name "Jenkins pipeline"'
             sh 'git add deploy/resources/frontend-deployment.yaml'
             sh 'git commit -m "image tag updated: ${image_tag}"'
             sh 'git push origin master'
