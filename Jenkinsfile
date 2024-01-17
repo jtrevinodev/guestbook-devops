@@ -104,7 +104,7 @@ pipeline {
             sh 'git config --global user.name "Jenkins pipeline"'
             sh 'git add deploy/resources/frontend-deployment.yaml'
             sh 'git commit -m "image tag updated: ${image_tag}"'
-            sh 'git push origin master'
+            sh 'git push origin'
           //}
 
         }
