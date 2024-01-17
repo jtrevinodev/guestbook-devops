@@ -112,15 +112,24 @@ pipeline {
             sh 'echo "Pushing deployment config to deployment repository"'
 
             
-            sh 'git config --global user.email "jtrevino.dev@gmail.com"'
-            sh 'git config --global user.name "Jenkins pipeline"'
-            //sh 'git checkout master'
-            sh "git add ${frontend_df}"
-            sh 'git commit -m "image tag updated: ${image_tag}"'
-
-            withCredentials([gitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
+            
+            
+            //withCredentials([gitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
+            withCredentials([sshUserPrivateKey(credentialsId: "github-key", keyFileVariable: 'key')]) {
+              sh 'git config --global user.email "jtrevino.dev@gmail.com"'
+              sh 'git config --global user.name "Jenkins pipeline"'
+              //sh 'git checkout master'
+              sh "git add ${frontend_df}"
+              sh 'git commit -m "image tag updated: ${image_tag}"'
+              
+              //auth to git here then do some commands for example:
+              //sh 'git commmit -am "hello my commit message'
+              sh 'GIT_SSH_COMMAND = "ssh -i $key"'
+              //sh 'git push git@bitbucket.psr.io/scme/ci/ci.git aTag'
               sh 'git push origin master'
             }
+              
+            //}
             
 
             }
