@@ -99,7 +99,7 @@ pipeline {
 
           sh 'echo "Pushing deployment config to deployment repository"'
 
-          withCredentials([sshUserPrivateKey(credentialsId: 'github-key', gitToolName: 'git-tool')]) {
+          withCredentials([sshUserPrivateKey(credentialsId: 'github-key')]) {
             sh 'git config --global user.email "jtrevino.dev@gmail.com"'
             sh 'git config --global user.name "Jenkins pipeline"'
             sh 'git checkout -b dev'
