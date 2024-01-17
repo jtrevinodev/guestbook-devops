@@ -124,7 +124,7 @@ pipeline {
               
               //auth to git here then do some commands for example:
               //sh 'git commmit -am "hello my commit message'
-              sh 'GIT_SSH_COMMAND = "ssh -i $key"'
+              //sh 'GIT_SSH_COMMAND = "ssh -i $key"'
               //sh 'git push git@bitbucket.psr.io/scme/ci/ci.git aTag'
               sh 'git push origin master'
             }
