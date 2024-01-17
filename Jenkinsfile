@@ -45,7 +45,7 @@ pipeline {
           //pwd
           //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
-          app = docker.build("jtrevinodev/guestbook:prod", "src/php-redis")
+          app = docker.build("jtrevinodev/guestbook", "src/php-redis")
         }
         //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
@@ -74,9 +74,9 @@ pipeline {
         }*/
 
         script{
-          docker.withRegistry( '', registryCredential ) {
+          docker.withRegistry('', registryCredential ) {
             //app.push()
-            app.push("${env.BUILD_NUMBER}")
+            app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
 
             //sh 'docker push jtrevinodev/guestbook:prod'
           }
@@ -92,10 +92,11 @@ pipeline {
     stage('Deploy to Kubernetes') {
       steps{
         script{
-          echo "Hello from deploy stage"
+          echo "Deploying to production environment"
         }
         
       }
+      
       // agent {
 
       //   kubernetes {
