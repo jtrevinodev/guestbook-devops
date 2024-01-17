@@ -92,26 +92,25 @@ pipeline {
       steps{
         script{
           sh('echo "Deploying to production environment"')
+          
+          sh 'echo "Clonning deployment repository"'
+          git credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops-deploy.git'
 
-          def frontend_deployment = readFile "deploy/resources/frontend-deployment.yaml"
+          def frontend_deployment = readFile "base/resources/frontend-deployment.yaml"
           frontend_deployment = frontend_deployment.replaceAll("image:.*", "image: jtrevinodev/guestbook:${image_tag}")
-          writeFile file: "deploy/resources/frontend-deployment.yaml", text: frontend_deployment
-          sh('cat deploy/resources/frontend-deployment.yaml')
+          writeFile file: "base/resources/frontend-deployment.yaml", text: frontend_deployment
+          sh('cat base/resources/frontend-deployment.yaml')
 
           sh 'echo "Pushing deployment config to deployment repository"'
 
-          //withCredentials([sshUserPrivateKey(credentialsId: 'github-key')]) {
-
-          // The below will clone your repo and will be checked out to master branch by default.
-           
           
-            sh 'git config --global user.email "jtrevino.dev@gmail.com"'
-            sh 'git config --global user.name "Jenkins pipeline"'
-            sh 'git checkout master'
-            sh 'git add deploy/resources/frontend-deployment.yaml'
-            sh 'git commit -m "image tag updated: ${image_tag}"'
-            sh 'git push origin master'
-          //}
+          sh 'git config --global user.email "jtrevino.dev@gmail.com"'
+          sh 'git config --global user.name "Jenkins pipeline"'
+          //sh 'git checkout master'
+          sh 'git add base/resources/frontend-deployment.yaml'
+          sh 'git commit -m "image tag updated: ${image_tag}"'
+          sh 'git push origin master'
+          
 
         }
         
