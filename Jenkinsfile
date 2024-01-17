@@ -94,11 +94,18 @@ pipeline {
           sh('echo "Deploying to production environment"')
           
           sh 'echo "Clonning deployment repository"'
+
+          // withCredentials([gitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
+          //   git clone 
+          // }
+
           git credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops-deploy.git'
-          // Do a ls -lart to view all the files are cloned. It will be clonned. This is just for you to be sure about it.
-          sh "ls -lart ./*" 
+
+          
+
 
           sh('pwd')
+          sh('ls')
           sh('ls ../')
 
           def frontend_df = "guestbook-devops-deploy/base/resources/frontend-deployment.yaml"
