@@ -116,16 +116,16 @@ pipeline {
             
             //withCredentials([GitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
             //withCredentials([sshUserPrivateKey(credentialsId: "github-key", keyFileVariable: 'key')]) {
-            //withCredentials([string(credentialsId: 'github-accesstoken', variable: 'TOKEN')]) {
+            withCredentials([string(credentialsId: 'github-jenkins-ak', variable: 'TOKEN')]) {
             // For SSH private key authentication, try the sshagent step from the SSH Agent plugin.
-              sshagent (credentials: ['github-key']) {
+            //  sshagent (credentials: ['github-key']) {
                 sh 'git config --global user.email "jtrevino.dev@gmail.com"'
                 sh 'git config --global user.name "Jenkins pipeline"'
                 //sh 'git checkout master'
                 sh "git add ${frontend_df}"
                 sh 'git commit -m "image tag updated: ${image_tag}"'
                 
-                //sh 'git remote set-url origin https://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@github.com/jtrevinodev/guestbook-devops-deploy.git'
+                sh 'git remote set-url origin https://$TOKEN@github.com/jtrevinodev/guestbook-devops-deploy.git'
 
                 sh 'git push origin master'
               }
