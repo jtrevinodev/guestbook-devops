@@ -15,6 +15,8 @@ pipeline {
     registry = "jtrevinodev/guestbook"
     registryCredential = 'docker-hub-credential'
     app = ''
+
+    image_tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}-${env.BUILD_NUMBER}"
   }
 
   stages {
@@ -72,7 +74,8 @@ pipeline {
         script{
           docker.withRegistry('', registryCredential ) {
             //app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
-            app.push("${env.BRANCH_NAME}-${env.GIT_COMMIT}-${env.BUILD_NUMBER}")
+            //app.push("${env.BRANCH_NAME}-${env.GIT_COMMIT}-${env.BUILD_NUMBER}")
+            app.push(image_tag)
 
           }
         }
@@ -88,6 +91,12 @@ pipeline {
       steps{
         script{
           echo "Deploying to production environment"
+
+          def frontend_deployment = readFile "deploy/resources/frontend-deployment.yaml"
+          frontend_deployment = frontend_deployment.replaceAll("image:.*", "image: jtrevinodev/guestbook:${image_tag}")
+          writeFile file: "deploy/resources/frontend-deployment.yaml", text: frontend_deployment
+          cat "deploy/resources/frontend-deployment.yaml"
+          
         }
         
       }
