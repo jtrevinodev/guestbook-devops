@@ -99,12 +99,11 @@ pipeline {
           //   git clone 
           // }
 
-          docker.image('argoproj/argo-cd-ci-builder:v1.0.0').inside {
+          //docker.image('argoproj/argo-cd-ci-builder:v1.0.0').inside {
             dir("deploy") {
             git credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops-deploy.git'
             sh('pwd')
             sh('ls')
-            }
             
             def frontend_df = "guestbook-devops-deploy/base/resources/frontend-deployment.yaml"
             def frontend_deployment = readFile frontend_df
@@ -121,7 +120,9 @@ pipeline {
             sh 'git add ${frontend_df}'
             sh 'git commit -m "image tag updated: ${image_tag}"'
             sh 'git push origin master'
-          }
+
+            }
+          //}
 
           
           
