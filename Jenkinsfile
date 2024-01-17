@@ -90,13 +90,13 @@ pipeline {
     stage('Deploy to Kubernetes') {
       steps{
         script{
-          echo "Deploying to production environment"
+          sh('echo "Deploying to production environment"')
 
           def frontend_deployment = readFile "deploy/resources/frontend-deployment.yaml"
           frontend_deployment = frontend_deployment.replaceAll("image:.*", "image: jtrevinodev/guestbook:${image_tag}")
           writeFile file: "deploy/resources/frontend-deployment.yaml", text: frontend_deployment
-          cat "deploy/resources/frontend-deployment.yaml"
-          
+          sh('cat deploy/resources/frontend-deployment.yaml')
+
         }
         
       }
