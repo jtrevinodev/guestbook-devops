@@ -102,9 +102,10 @@ pipeline {
           //withCredentials([gitUsernamePassword(credentialsId: 'github-key', gitToolName: 'git-tool')]) {
             sh 'git config --global user.email "jtrevino.dev@gmail.com"'
             sh 'git config --global user.name "Jenkins pipeline"'
+            sh 'git checkout -b dev'
             sh 'git add deploy/resources/frontend-deployment.yaml'
             sh 'git commit -m "image tag updated: ${image_tag}"'
-            sh 'git push origin'
+            sh 'git push origin dev'
           //}
 
         }
