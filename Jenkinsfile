@@ -95,9 +95,7 @@ pipeline {
           
           sh 'echo "Clonning deployment repository"'
 
-          // withCredentials([gitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
-          //   git clone 
-          // }
+          
 
           //docker.image('argoproj/argo-cd-ci-builder:v1.0.0').inside {
             dir("deploy") {
@@ -119,7 +117,11 @@ pipeline {
             //sh 'git checkout master'
             sh "git add ${frontend_df}"
             sh 'git commit -m "image tag updated: ${image_tag}"'
-            sh 'git push origin master'
+
+            withCredentials([gitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
+              sh 'git push origin master'
+            }
+            
 
             }
           //}
@@ -131,27 +133,7 @@ pipeline {
         
       }
       
-      // agent {
-
-      //   kubernetes {
-      //     label 'k8-local-cluster'
-
-      //   }
-
-      // }
       
-
-      // steps {
-
-      //   kubernetesDeploy(
-
-      //     configs: 'deploy/prod/',
-
-      //     kubeconfigId: 'my-kubeconfig'
-
-      //   )
-
-      // }
 
     }
 
