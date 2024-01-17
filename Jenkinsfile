@@ -98,11 +98,11 @@ pipeline {
           sh('cat deploy/resources/frontend-deployment.yaml')
 
           sh 'echo "Pushing deployment config to deployment repository"'
-          
+
           withCredentials([gitUsernamePassword(credentialsId: 'github-key', gitToolName: 'git-tool')]) {
             sh 'git add deploy/resources/frontend-deployment.yaml'
             sh 'git commit -m "image tag updated: ${image_tag}"'
-            SH 'git push origin master'
+            sh 'git push origin master'
           }
 
         }
