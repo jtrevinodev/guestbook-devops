@@ -90,27 +90,33 @@ pipeline {
     
 
     stage('Deploy to Kubernetes') {
-      agent {
-
-      kubernetes {
-        label 'k8-local-cluster'
-
+      steps{
+        script{
+          echo "Hello from deploy stage"
+        }
+        
       }
+      // agent {
 
-      }
+      //   kubernetes {
+      //     label 'k8-local-cluster'
+
+      //   }
+
+      // }
       
 
-      steps {
+      // steps {
 
-        kubernetesDeploy(
+      //   kubernetesDeploy(
 
-          configs: 'deploy/prod/',
+      //     configs: 'deploy/prod/',
 
-          kubeconfigId: 'my-kubeconfig'
+      //     kubeconfigId: 'my-kubeconfig'
 
-        )
+      //   )
 
-      }
+      // }
 
     }
 
