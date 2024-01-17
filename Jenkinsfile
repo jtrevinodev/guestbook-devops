@@ -100,6 +100,9 @@ pipeline {
           sh 'echo "Pushing deployment config to deployment repository"'
 
           //withCredentials([sshUserPrivateKey(credentialsId: 'github-key')]) {
+
+          // The below will clone your repo and will be checked out to master branch by default.
+           git credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops.git'
           
             sh 'git config --global user.email "jtrevino.dev@gmail.com"'
             sh 'git config --global user.name "Jenkins pipeline"'
