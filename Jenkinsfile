@@ -118,7 +118,7 @@ pipeline {
             //withCredentials([sshUserPrivateKey(credentialsId: "github-key", keyFileVariable: 'key')]) {
             //withCredentials([string(credentialsId: 'github-accesstoken', variable: 'TOKEN')]) {
             // For SSH private key authentication, try the sshagent step from the SSH Agent plugin.
-              sshagent (credentials: ['git-ssh-credentials-ID']) {
+              sshagent (credentials: ['github-key']) {
                 sh 'git config --global user.email "jtrevino.dev@gmail.com"'
                 sh 'git config --global user.name "Jenkins pipeline"'
                 //sh 'git checkout master'
