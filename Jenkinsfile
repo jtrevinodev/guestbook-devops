@@ -114,8 +114,8 @@ pipeline {
             
             
             
-            //withCredentials([gitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
-            withCredentials([sshUserPrivateKey(credentialsId: "github-key", keyFileVariable: 'key')]) {
+            withCredentials([GitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
+            //withCredentials([sshUserPrivateKey(credentialsId: "github-key", keyFileVariable: 'key')]) {
               sh 'git config --global user.email "jtrevino.dev@gmail.com"'
               sh 'git config --global user.name "Jenkins pipeline"'
               //sh 'git checkout master'
