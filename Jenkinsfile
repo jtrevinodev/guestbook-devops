@@ -68,17 +68,12 @@ pipeline {
     stage('Push container image to registry'){
       
       steps{
-        /*script{
-          app.push("${env.BUILD_NUMBER}")
-          app.push("prod")
-        }*/
 
         script{
           docker.withRegistry('', registryCredential ) {
-            //app.push()
-            app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+            //app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+            app.push("${env.BRANCH_NAME}-${env.GIT_COMMIT}-${env.BUILD_NUMBER}")
 
-            //sh 'docker push jtrevinodev/guestbook:prod'
           }
         }
 
