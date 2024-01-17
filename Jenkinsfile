@@ -117,20 +117,29 @@ pipeline {
             //withCredentials([GitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
             //withCredentials([sshUserPrivateKey(credentialsId: "github-key", keyFileVariable: 'key')]) {
             //withCredentials([string(credentialsId: 'github-accesstoken', variable: 'TOKEN')]) {
+            // For SSH private key authentication, try the sshagent step from the SSH Agent plugin.
+              sshagent (credentials: ['git-ssh-credentials-ID']) {
+                sh 'git config --global user.email "jtrevino.dev@gmail.com"'
+                sh 'git config --global user.name "Jenkins pipeline"'
+                //sh 'git checkout master'
+                sh "git add ${frontend_df}"
+                sh 'git commit -m "image tag updated: ${image_tag}"'
+                
+                //sh 'git remote set-url origin https://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@github.com/jtrevinodev/guestbook-devops-deploy.git'
+
+                sh 'git push origin master'
+              }
               
-              sh 'git config --global user.email "jtrevino.dev@gmail.com"'
+              /*sh 'git config --global user.email "jtrevino.dev@gmail.com"'
               sh 'git config --global user.name "Jenkins pipeline"'
               //sh 'git checkout master'
               sh "git add ${frontend_df}"
               sh 'git commit -m "image tag updated: ${image_tag}"'
               
-              //auth to git here then do some commands for example:
-              //sh 'git commmit -am "hello my commit message'
-              //sh 'GIT_SSH_COMMAND = "ssh -i $key"'
-              //sh 'git push git@bitbucket.psr.io/scme/ci/ci.git aTag'
               sh 'git remote set-url origin https://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@github.com/jtrevinodev/guestbook-devops-deploy.git'
 
               sh 'git push origin master'
+              */
             //}
               
             //}
