@@ -99,11 +99,13 @@ pipeline {
           //   git clone 
           // }
 
-          docker.image('maven:3.3.3-jdk-8').inside {
+          docker.image('argoproj/argo-cd-ci-builder:v1.0.0').inside {
+            dir("deploy") {
             git credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops-deploy.git'
             sh('pwd')
             sh('ls')
-
+            }
+            
             def frontend_df = "guestbook-devops-deploy/base/resources/frontend-deployment.yaml"
             def frontend_deployment = readFile frontend_df
             frontend_deployment = frontend_deployment.replaceAll("image:.*", "image: jtrevinodev/guestbook:${image_tag}")
