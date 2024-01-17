@@ -95,6 +95,8 @@ pipeline {
           
           sh 'echo "Clonning deployment repository"'
           git credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops-deploy.git'
+          // Do a ls -lart to view all the files are cloned. It will be clonned. This is just for you to be sure about it.
+          sh "ls -lart ./*" 
 
           sh('pwd')
           sh('ls ../')
