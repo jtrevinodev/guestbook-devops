@@ -116,7 +116,7 @@ pipeline {
             
             //withCredentials([GitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
             //withCredentials([sshUserPrivateKey(credentialsId: "github-key", keyFileVariable: 'key')]) {
-            withCredentials([string(credentialsId: 'github-accesstoken', variable: 'TOKEN')]) {
+            //withCredentials([string(credentialsId: 'github-accesstoken', variable: 'TOKEN')]) {
               
               sh 'git config --global user.email "jtrevino.dev@gmail.com"'
               sh 'git config --global user.name "Jenkins pipeline"'
@@ -128,10 +128,10 @@ pipeline {
               //sh 'git commmit -am "hello my commit message'
               //sh 'GIT_SSH_COMMAND = "ssh -i $key"'
               //sh 'git push git@bitbucket.psr.io/scme/ci/ci.git aTag'
-              sh 'git remote set-url origin https://$TOKEN@github.com/jtrevinodev/guestbook-devops-deploy.git'
+              sh 'git remote set-url origin https://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@github.com/jtrevinodev/guestbook-devops-deploy.git'
 
               sh 'git push origin master'
-            }
+            //}
               
             //}
             
