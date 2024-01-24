@@ -119,6 +119,14 @@ pipeline {
     }
 
   }
+  post{
+    success {
+      mail to:"jtrevino.dev@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build succeded."
+    }
+    failure {
+      mail to:"jtrevino.dev@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
+    }
+  }
 
 }
 
