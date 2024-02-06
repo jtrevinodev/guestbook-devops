@@ -13,15 +13,9 @@ pipeline {
 
     stage('Clone repository') {
 
-      /*steps {
-        git branch: 'master', credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops.git'
-
-      }*/
-
       steps { 
         script{
           checkout scm
-          //git credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops.git'
         }
       }
 
@@ -35,22 +29,10 @@ pipeline {
 
         script{
           echo "Building docker container"
-          //pwd
-          //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
-
           app = docker.build("jtrevinodev/guestbook", "src/php-redis")
         }
-        //sh 'docker build -t jtrevinodev/guestbook:prod src/php-redis'
 
       }
-
-      /*steps {
-
-        sh 'docker build -t jtrevinodev/guestbook:prod src/redis-slave'
-
-        sh 'docker push jtrevinodev/guestbook:prod'
-
-      }*/
 
     }
 
@@ -60,8 +42,6 @@ pipeline {
 
         script{
           docker.withRegistry('', registryCredential ) {
-            //app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
-            //app.push("${env.BRANCH_NAME}-${env.GIT_COMMIT}-${env.BUILD_NUMBER}")
             app.push(image_tag)
 
           }
@@ -81,7 +61,6 @@ pipeline {
           
           sh 'echo "Clonning deployment repository"'
 
-          //docker.image('argoproj/argo-cd-ci-builder:v1.0.0').inside {
           dir("deploy") {
             git credentialsId: 'github-key', url: 'git@github.com:jtrevinodev/guestbook-devops-deploy.git'
 
@@ -93,14 +72,12 @@ pipeline {
 
             sh 'echo "Pushing deployment config to deployment repository"'
             
-            //withCredentials([GitUsernamePassword(credentialsId: 'github-accesstoken', gitToolName: 'Default')]){
-            //withCredentials([sshUserPrivateKey(credentialsId: "github-key", keyFileVariable: 'key')]) {
+            
             withCredentials([string(credentialsId: 'github-jenkins-ak', variable: 'TOKEN')]) {
-            // For SSH private key authentication, try the sshagent step from the SSH Agent plugin.
-            //  sshagent (credentials: ['github-key']) {
+            
               sh 'git config --global user.email "jtrevino.dev@gmail.com"'
               sh 'git config --global user.name "Jenkins pipeline"'
-              //sh 'git checkout master'
+
               sh "git add ${frontend_df}"
               sh 'git commit -m "image tag updated: ${image_tag}"'
               
@@ -119,7 +96,7 @@ pipeline {
     }
 
   }
-  post{
+  post {
     success {
       mail to:"jtrevino.dev@gmail.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Build succeded."
     }
